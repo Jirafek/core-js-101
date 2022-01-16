@@ -1,3 +1,8 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-nested-ternary */
 /* *************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *
@@ -27,8 +32,10 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  return num % 3 === 0 && num % 5 === 0
+    ? 'FizzBuzz' : num % 3 === 0 ? 'Fizz'
+      : num % 5 === 0 ? 'Buzz' : num;
 }
 
 
@@ -43,8 +50,8 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  return (n !== 1) ? n * getFactorial(n - 1) : 1;
 }
 
 
@@ -60,8 +67,13 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  return new Array(n2 - n1 + 1).fill(0)
+    .map((el) => {
+      el = n1;
+      n1 += 1;
+      return el;
+    }).reduce((acc, res) => acc + res, 0);
 }
 
 
@@ -80,8 +92,8 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  return a + b > c && a + c > b && b + c > a;
 }
 
 
@@ -102,7 +114,7 @@ function isTriangle(/* a, b, c */) {
  *     -------------
  *        width=20
  *
- * NOTE: Please use canvas coordinate space (https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#The_grid),
+ * NOTE: Please use canvas coordinate space (https://developer.m                              ozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#The_grid),
  * it differs from Cartesian coordinate system.
  *
  * @param {object} rect1
@@ -164,8 +176,13 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  for (const el of str.replace(/\s/g, '').split('')) {
+    if (str.split('').filter((c) => c === el).length === 1) {
+      return el;
+    }
+  }
+  return null;
 }
 
 
@@ -191,8 +208,8 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  return `${isStartIncluded ? '[' : '('}${Math.min(a, b)}, ${Math.max(a, b)}${isEndIncluded ? ']' : ')'}`;
 }
 
 
@@ -208,8 +225,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -225,8 +242,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return +String(num).split('').reverse().join('');
 }
 
 
@@ -250,8 +267,17 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  ccn = String(ccn);
+  const arr = [];
+  for (let i = 0; i < ccn.length; i += 1) {
+    if (((ccn.length - 1) % 2 === 0 && (i + 1) % 2 === 0)
+    || ((ccn.length - 1) % 2 !== 0 && (i + 1) % 2 !== 0)) {
+      if (2 * +ccn[i] > 9) arr.push((2 * +ccn[i]) - 9);
+      else arr.push(2 * +ccn[i]);
+    } else arr.push(+ccn[i]);
+  }
+  return arr.reduce((acc, res) => acc + res, 0) % 10 === 0;
 }
 
 /**
@@ -268,8 +294,9 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  num = +String(num).split('').reduce((acc, res) => +acc + +res, 0);
+  return num < 9 ? num : +String(num).split('').reduce((acc, res) => +acc + +res, 0);
 }
 
 
@@ -294,8 +321,23 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const map = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '<': '>',
+  };
+  const closing = Object.values(map);
+  const stack = [];
+  for (const i of str) {
+    if (map[i]) {
+      stack.push(i);
+    } else if (closing.includes(i) && i !== map[stack.pop()]) {
+      return false;
+    }
+  }
+  return !stack.length;
 }
 
 
